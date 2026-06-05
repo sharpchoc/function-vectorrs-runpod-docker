@@ -13,7 +13,7 @@ mkdir -p /workspace/wandb
 
 cd /workspace
 
-python3.10 -m jupyter lab \
+python -m jupyter lab \
   --ip=0.0.0.0 \
   --port=8888 \
   --allow-root \
