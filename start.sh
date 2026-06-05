@@ -11,6 +11,23 @@ mkdir -p /workspace/probe_results
 mkdir -p /workspace/checkpoints
 mkdir -p /workspace/wandb
 
+# Set up SSH
+mkdir -p /var/run/sshd
+mkdir -p /root/.ssh
+chmod 700 /root/.ssh
+
+if [ -n "${PUBLIC_KEY:-}" ]; then
+  echo "$PUBLIC_KEY" > /root/.ssh/authorized_keys
+  chmod 600 /root/.ssh/authorized_keys
+fi
+
+# Allow root login with SSH key
+sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config || true
+sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config || true
+sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config || true
+
+/usr/sbin/sshd
+
 cd /workspace
 
 python -m jupyter lab \
