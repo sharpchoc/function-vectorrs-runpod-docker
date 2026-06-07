@@ -11,7 +11,7 @@ sympy==1.14.0
 jupyterlab
 ipykernel
 ipywidgets
-pandas==1.5.3
+pandas>=2.2.2
 matplotlib==3.7.1
 scikit-learn
 tqdm
